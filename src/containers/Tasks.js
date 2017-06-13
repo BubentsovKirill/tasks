@@ -18,7 +18,10 @@ class Tasks extends Component{
     }
 
     handleOnClick(id){
-        // this.props.history.push(`/tasks/${id}`);
+    //TODO: вот тут не знаю как сделать
+        //в старых версиях болы что то типо такого this.context.router.history.push(`/tasks/${id}`)
+        //как сейчас это делается не догоняю
+
     }
 
     handleTitleChange(event){
@@ -92,6 +95,7 @@ class Tasks extends Component{
                        </ul>
                    </div>
                    <div className="col-md-6">
+                       {/*вот сдесь должен показаться нужный мне контент*/}
                        <Route path="/tasks/:taskId" component={TaskView}/>
                    </div>
                </div>
