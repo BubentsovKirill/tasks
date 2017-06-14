@@ -1,17 +1,4 @@
-const initialState = [
-    {
-        id: 0,
-        title: 'Task 1333',
-        discription : 'some tasks',
-        isCompleted : false
-    },
-    {
-        id: 1,
-        title: 'Task 2',
-        discription : 'some tasks 2',
-        isCompleted : false
-    }
-];
+const initialState = [];
 
 export default function tasks(state = initialState, action){
     if(action.type === 'ADD_TASK'){

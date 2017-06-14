@@ -13,12 +13,13 @@ import './index.css';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
+
 const store = createStore(combineReducers({tasks,router: routerReducer}),applyMiddleware(middleware),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedRouter  history={history}>
+        <ConnectedRouter  history={history} >
                 <App />
         </ConnectedRouter>
     </Provider>

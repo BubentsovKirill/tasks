@@ -1,27 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
-import { PropTypes } from 'prop-types'
 
 import Task from '../components/Task';
 import TaskView from '../components/TaskView';
 
 class Tasks extends Component{
-    constructor(props,context){
-        super(props,context);
+    constructor(props){
+        super(props);
         this.state = {
             task : {
                 title : '',
                 dicription: ''
             }
         }
-    }
-
-    handleOnClick(id){
-    //TODO: вот тут не знаю как сделать
-        //в старых версиях болы что то типо такого this.context.router.history.push(`/tasks/${id}`)
-        //как сейчас это делается не догоняю
-
     }
 
     handleTitleChange(event){
@@ -46,19 +38,20 @@ class Tasks extends Component{
         event.preventDefault();
         const title = this.state.task.title;
         const discription = this.state.task.dicription;
-        this.props.onAddTask(title, discription);
-        this.setState({
-            task: {
-                title: '',
-                dicription: ''
-            }
-        })
+        if(this.state.task.title && this.state.task.dicription !== ''){
+            this.props.onAddTask(title, discription);
+            this.setState({
+                task: {
+                    title: '',
+                    dicription: ''
+                }
+            })
+        }
     }
 
     render(){
         const onDeleteTask = this.props.onDeleteTask;
         const onChangeCompleted = this.props.onChangeCompleted;
-        const handleOnClick = this.handleOnClick;
         return(
             <div className="container">
                <div className="row">
@@ -83,7 +76,7 @@ class Tasks extends Component{
                            {
                                this.props.tasks.map(function(item){
                                    return <Task key={item.id}
-                                                showTaskView={handleOnClick.bind(null,item.id)}
+                                                id={item.id}
                                                 title={item.title}
                                                 discription={item.discription}
                                                 isCompleted={item.isCompleted}
@@ -95,7 +88,6 @@ class Tasks extends Component{
                        </ul>
                    </div>
                    <div className="col-md-6">
-                       {/*вот сдесь должен показаться нужный мне контент*/}
                        <Route path="/tasks/:taskId" component={TaskView}/>
                    </div>
                </div>
@@ -105,15 +97,16 @@ class Tasks extends Component{
 }
 
 export default withRouter(connect(
-    state => ({
-        tasks : state.tasks
+    (state, ownProps) => ({
+        tasks : state.tasks,
+        ownProps
     }),
     dispatch => ({
         onAddTask:(title,dicription) => {
             const payload = {
-                id: Date.now().toString(),
+                id: Date.now(),
                 title : title,
-                dicription : dicription,
+                discription : dicription,
                 isCompleted : false
             };
             dispatch({
