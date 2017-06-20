@@ -19,5 +19,8 @@ export default function tasks(state = initialState, action){
             return item
         })
     }
+    else if(action.type === 'FETCH_TASKS_SUCCESS'){
+        return action.payload
+    }
     return state
 }

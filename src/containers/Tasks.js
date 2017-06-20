@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
 import Task from '../components/Task';
+import getTasks from '../action/tasks';
 import TaskView from '../components/TaskView';
 
 class Tasks extends Component{
@@ -14,6 +15,10 @@ class Tasks extends Component{
                 dicription: ''
             }
         }
+    }
+
+    componentDidMount(){
+        this.props.onGetTasks()
     }
 
     handleTitleChange(event){
@@ -68,6 +73,7 @@ class Tasks extends Component{
                                          onChange={this.handleDiscriptionChange.bind(this)}/>
                            </div>
                            <button type="submit" className="btn btn-default pull-right">Add task</button>
+                           {/*<button onClick={this.props.onGetTasks} className="btn btn-default">Load Task</button>*/}
                            <div className="clearFix"></div>
                        </form>
                        <br/>
@@ -122,6 +128,9 @@ export default withRouter(connect(
                 type: 'DELETE_TASK',
                 payload: payload
             })
+        },
+        onGetTasks:() => {
+          dispatch(getTasks());
         },
         onChangeCompleted:(id,isCompleted) => {
             const payload = {
